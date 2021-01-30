@@ -1,49 +1,66 @@
 package Tile;
 
+import Entities.Fire;
+import Entities.NPC;
+import Entities.Player;
+
 import java.util.Scanner;
 
 public class Map {
     private Tile[][] map;
     private int height, width;
-    private int playerx, playery;
+    private Player player;
     private boolean gameInProgress = true;
+    private Scanner scanner=new Scanner(System.in);
 
-    public Map(int x, int y) {
-        this.height = x;
-        this.width = y;
-        this.map = new Tile[x][y];
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+    public Map(int height, int width) {
+        this.height = height;
+        this.width = width;
+        this.map = new Tile[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 map[i][j] = new Tile();
             }
         }
+        player = new Player((int) (Math.random() * height), (int) (Math.random() * width));
+        this.setHasPlayer(true);
+        int x, y;
+        for (int i = 0; i < 4; i++) {
+            do {
+                x = (int) (Math.random() * height);
+                y = (int) (Math.random() * width);
+            } while (map[x][y].isOccupied());
+            map[x][y].setEntity(new NPC());
+        }
+        for (int i = 0; i < 4; i++) {
+            do {
+                x = (int) (Math.random() * height);
+                y = (int) (Math.random() * width);
+            } while (map[x][y].isOccupied());
+            map[x][y].setEntity(new Fire());
+        }
     }
 
-
-    public void setPlayer(int x, int y) {
-        playerx = x;
-        playery = y;
-        map[x][y].setHasPlayer(true);
+    public void setHasPlayer(boolean b) {
+        map[player.getX()][player.getY()].setHasPlayer(b);
     }
 
     public void movePlayer(String s) {
-        map[playerx][playery].setHasPlayer(false);
-        if (s.equalsIgnoreCase("up")) {
-            playerx--;
-        } else if (s.equalsIgnoreCase("down")) {
-            playerx++;
-        } else if (s.equalsIgnoreCase("left")) {
-            playery--;
-        } else if (s.equalsIgnoreCase("right")) {
-            playery++;
-        }
-        map[playerx][playery].setHasPlayer(true);
-        if (playery < 0 || playery >= width || playerx < 0 || playerx >= height) {
+        this.setHasPlayer(false);
+        player.movePlayer(s);
+
+        if (player.checkBounds(height, width)) {
             System.out.println("It appears you have discovered the edge of the world. You're now falling into the endless abyss. Game over.");
-            gameInProgress = false;
+            player.damageOrHeal(-9999);
+        }else {
+            this.setHasPlayer(true);
         }
     }
-
+    public void checkWinOrLose(){
+        if(player.getHealth()<=0){
+            gameInProgress=false;
+        }
+    }
 
     public void drawMap() {
         for (int j = 0; j < width; j++) {
@@ -68,10 +85,14 @@ public class Map {
     }
 
     public void gameplay() {
-        Scanner scanner = new Scanner(System.in);
         while (gameInProgress) {
             this.drawMap();
-            this.movePlayer(scanner.nextLine());
+            player=map[player.getX()][player.getY()].entityAction(player);
+            this.checkWinOrLose();
+            String str=scanner.nextLine();
+            this.movePlayer(str);
+            player=map[player.getX()][player.getY()].entityInteraction(str,player);
+            this.checkWinOrLose();
         }
     }
 

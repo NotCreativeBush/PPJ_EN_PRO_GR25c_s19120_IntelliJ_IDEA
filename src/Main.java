@@ -6,16 +6,14 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Map map=new Map(20,20);
-
-        //Player player=new Player();
-        map.setPlayer((int)(Math.random()*20),(int)(Math.random()*20));
-
-
-
-
-       // Scanner scanner=new Scanner(System.in);
-
-        map.gameplay();
+        boolean wishToContinue;
+        Map map;
+        Scanner scanner=new Scanner(System.in);
+        do {
+            map = new Map(20, 20);
+            map.gameplay();
+            System.out.println("Game over, do you wish to continue? Type Yes or No.");
+            wishToContinue=scanner.nextLine().equalsIgnoreCase("yes");
+        } while (wishToContinue);
     }
 }
