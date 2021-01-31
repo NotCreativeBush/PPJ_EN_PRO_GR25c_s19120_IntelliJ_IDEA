@@ -79,11 +79,11 @@ public class Enemy extends NPC {
     public void interact(String str, Player player) {
         if (!isAggression()) {
             friendlyInteract(str, player);
-        }
-        else angryInteract(str, player);
+        } else angryInteract(str, player);
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return "E";
     }
 }

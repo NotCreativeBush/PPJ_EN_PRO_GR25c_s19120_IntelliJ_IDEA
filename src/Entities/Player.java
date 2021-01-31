@@ -34,14 +34,15 @@ public class Player extends NPC {
     public void acquireBooze(int amount) {
         booze += amount;
     }
-    public void useBooze(String str){
-        if(str.equalsIgnoreCase("drink")){
-            if(booze>0){
+
+    public void useBooze(String str) {
+        if (str.equalsIgnoreCase("drink")) {
+            if (booze > 0) {
                 booze--;
                 System.out.println("You've drank some booze.");
                 gainEXP(4);
                 damageOrHeal(20);
-            }else{
+            } else {
                 System.out.println("No booze.");
             }
         }
@@ -84,7 +85,7 @@ public class Player extends NPC {
         System.out.println("You've gained " + amount + " EXP!");
         exp += amount;
         setStrength(getStrength() + (exp / 5));
-        lvl+=exp/5;
+        lvl += exp / 5;
         exp %= 5;
     }
 

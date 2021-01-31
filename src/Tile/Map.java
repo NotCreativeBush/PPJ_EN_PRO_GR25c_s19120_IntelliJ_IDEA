@@ -41,7 +41,6 @@ public class Map {
             } while (map[x][y].isOccupied());
             map[x][y].setEntity(new Enemy(10, 10, 10));
         }
-
     }
 
     public void setHasPlayer(boolean b) {
@@ -64,7 +63,8 @@ public class Map {
         if (player.getHealth() <= 0) {
             System.out.println("You've lost.");
             gameInProgress = false;
-        }if(player.getLvl()>=5){
+        }
+        if (player.getLvl() >= 5) {
             System.out.println("You've won.");
             gameInProgress = false;
         }

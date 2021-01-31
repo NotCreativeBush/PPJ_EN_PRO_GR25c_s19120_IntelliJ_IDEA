@@ -39,8 +39,8 @@ public class Fire extends Entity {
 
     @Override
     public ArrayList<String> availableMoves() {
-        ArrayList<String> arr= new ArrayList<>();
-        if(!extinguished){
+        ArrayList<String> arr = new ArrayList<>();
+        if (!extinguished) {
             arr.add("extinguish");
         }
         return arr;
