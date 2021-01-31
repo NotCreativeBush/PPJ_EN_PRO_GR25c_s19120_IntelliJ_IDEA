@@ -12,16 +12,16 @@ public class Enemy extends NPC {
     @Override
     public void action(Player player) {
         if (firstEncounter) {
-            System.out.println("You've encountered a person. 'Oi bruv, lend me sum dollarydoos or I'll punch ya'. You didn't understand a word. He does look australian. Seems angry.");
+            System.out.println("You've encountered an angry person. They demand dosh.");
             firstEncounter = false;
         } else if (isFainted()) {
-            System.out.println("This mate seems to be sleeping.");
+            System.out.println("They appear to be knocked out.");
 
         } else if (isAggression()) {
-            System.out.println("'Oh I'll fist ya alright'. Thankfully, he punched you.");
+            System.out.println("The person doesn't like you. He punches you.");
             player.damageOrHeal(-getStrength());
         } else {
-            System.out.println("'You's a good bloke mate'. You still don't understand him.");
+            System.out.println("'Thanks for the dosh'");
         }
     }
 
@@ -30,7 +30,7 @@ public class Enemy extends NPC {
             punch(str, player);
             if (str.equalsIgnoreCase("bribe")) {
                 if (player.getDosh() >= 5) {
-                    System.out.println("'Thanks bruv'. He seems to calm down. You think that at least.");
+                    System.out.println("'Thanks'. They seem to calm down.");
                     player.acquireOrLoseDosh(-5);
                     this.acquireOrLoseDosh(5);
                 } else {
@@ -44,10 +44,10 @@ public class Enemy extends NPC {
     private void punch(String str, Player player) {
         if (str.equalsIgnoreCase("punch")) {
             this.setAggression(true);
-            System.out.println("You've punched an angry person. He said something, you didn't understand.");
+            System.out.println("You've punched an angry person. He said something, you didn't understand");
             this.damageOrHeal(-player.getStrength());
             if (checkFaint()) {
-                System.out.println("'Shoulda given me dollarydoos mate'.The person fainted. You think he complemented your strength. He had some dosh.");
+                System.out.println("The angry person gets knocked out. Good.");
                 player.acquireOrLoseDosh(this.getDosh());
                 this.acquireOrLoseDosh(-this.getDosh());
                 player.gainEXP(11);
