@@ -10,7 +10,7 @@ public class Map {
     private int height, width;
     private Player player;
     private boolean gameInProgress = true;
-    private Scanner scanner=new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     public Map(int height, int width) {
         this.height = height;
@@ -21,15 +21,10 @@ public class Map {
                 map[i][j] = new Tile();
             }
         }
-        player = new Player((int) (Math.random() * height), (int) (Math.random() * width));
+        player = new Player(100, 100, 100, (int) (Math.random() * height), (int) (Math.random() * width));
         this.setHasPlayer(true);
         int x, y;
-        for (int i = 0; i < 4; i++) {
-            do {
-                x = (int) (Math.random() * height);
-                y = (int) (Math.random() * width);
-            } while (map[x][y].isOccupied());
-            map[x][y].setEntity(new NPC());
+        for (int i = 0; i < 10; i++) {
             do {
                 x = (int) (Math.random() * height);
                 y = (int) (Math.random() * width);
@@ -39,7 +34,12 @@ public class Map {
                 x = (int) (Math.random() * height);
                 y = (int) (Math.random() * width);
             } while (map[x][y].isOccupied());
-            map[x][y].setEntity(new Trader());
+            map[x][y].setEntity(new Trader(10, 10, 3));
+            do {
+                x = (int) (Math.random() * height);
+                y = (int) (Math.random() * width);
+            } while (map[x][y].isOccupied());
+            map[x][y].setEntity(new Enemy(10, 10, 10));
         }
 
     }
@@ -52,16 +52,21 @@ public class Map {
         this.setHasPlayer(false);
         player.movePlayer(s);
 
-        if (player.checkBounds(height, width)) {
+        if (!player.checkBounds(height, width)) {
             System.out.println("It appears you have discovered the edge of the world. You're now falling into the endless abyss. Game over.");
-            player.damageOrHeal(-9999);
-        }else {
+            player.damageOrHeal(-9999999);
+        } else {
             this.setHasPlayer(true);
         }
     }
-    public void checkWinOrLose(){
-        if(player.getHealth()<=0){
-            gameInProgress=false;
+
+    public void checkWinOrLose() {
+        if (player.getHealth() <= 0) {
+            System.out.println("You've lost.");
+            gameInProgress = false;
+        }if(player.getLvl()>=5){
+            System.out.println("You've won.");
+            gameInProgress = false;
         }
     }
 
@@ -91,14 +96,18 @@ public class Map {
         while (gameInProgress) {
             this.drawMap();
 
-            player=map[player.getX()][player.getY()].entityAction(player);
-            System.out.println("Your Health is "+player.getHealth());
+            player = map[player.getX()][player.getY()].entityAction(player);
+            System.out.println(player);
             this.checkWinOrLose();
-            map[player.getX()][player.getY()].availableInteractions();
-            String str=scanner.nextLine();
-            this.movePlayer(str);
-            player=map[player.getX()][player.getY()].entityInteraction(str,player);
-            this.checkWinOrLose();
+            if (gameInProgress) {
+                map[player.getX()][player.getY()].availableInteractions(player);
+                String str = scanner.nextLine();
+
+                player = map[player.getX()][player.getY()].entityInteraction(str, player);
+                player.useBooze(str);
+                this.movePlayer(str);
+                this.checkWinOrLose();
+            }
         }
     }
 

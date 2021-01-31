@@ -27,6 +27,7 @@ public class Fire extends Entity {
                 player.acquireOrUseExtinguisher(-1);
                 extinguished = true;
                 System.out.println("Fire has been extinguished. It has left a lot of ashes. In the ashes you can find several coins of dosh.");
+                player.acquireOrLoseDosh(10);
 
             } else {
                 System.out.println("You have forgotten an extinguisher. You are still standing in the fire. It's still very hot");

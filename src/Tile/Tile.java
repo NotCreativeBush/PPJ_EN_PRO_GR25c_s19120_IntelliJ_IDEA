@@ -42,11 +42,15 @@ public class Tile {
         return player;
     }
 
-    public void availableInteractions() {
-        System.out.print("Interactions available: left, right, down, up, ");
-        ArrayList<String> arr = entity.availableMoves();
+    public void availableInteractions(Player player) {
+        System.out.print("Interactions available: ");
+        ArrayList<String> arr = player.availableMoves();
+        if (entity != null) {
+            ArrayList<String> arr2 = entity.availableMoves();
+            arr.addAll(arr2);
+        }
         for (String x : arr) {
-            System.out.print(x + ", ");
+            System.out.print(x + " ");
         }
         System.out.println();
     }
