@@ -10,7 +10,7 @@ public class Enemy extends NPC {
     }
 
     @Override
-    public Player action(Player player) {
+    public void action(Player player) {
         if (firstEncounter) {
             System.out.println("You've encountered a person. 'Oi bruv, lend me sum dollarydoos or I'll punch ya'. You didn't understand a word. He does look australian. Seems angry.");
             firstEncounter = false;
@@ -23,10 +23,9 @@ public class Enemy extends NPC {
         } else {
             System.out.println("'You's a good bloke mate'. You still don't understand him.");
         }
-        return player;
     }
 
-    public Player angryInteract(String str, Player player) {
+    public void angryInteract(String str, Player player) {
         if (!isFainted()) {
             punch(str, player);
             if (str.equalsIgnoreCase("bribe")) {
@@ -39,7 +38,7 @@ public class Enemy extends NPC {
                 }
             }
         }
-        return player;
+
     }
 
     private void punch(String str, Player player) {
@@ -56,12 +55,12 @@ public class Enemy extends NPC {
         }
     }
 
-    public Player friendlyInteract(String str, Player player) {
+    public void friendlyInteract(String str, Player player) {
         if (!isFainted()) {
             punch(str, player);
 
         }
-        return player;
+
     }
 
     @Override
@@ -77,11 +76,11 @@ public class Enemy extends NPC {
     }
 
     @Override
-    public Player interact(String str, Player player) {
+    public void interact(String str, Player player) {
         if (!isAggression()) {
-            return friendlyInteract(str, player);
+            friendlyInteract(str, player);
         }
-        return angryInteract(str, player);
+        else angryInteract(str, player);
     }
     @Override
     public String toString(){

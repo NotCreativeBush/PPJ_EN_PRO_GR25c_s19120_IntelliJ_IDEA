@@ -8,7 +8,7 @@ public class Trader extends NPC {
     }
 
     @Override
-    public Player action(Player player) {
+    public void action(Player player) {
         if (isFainted()) {
             System.out.println("Trader is unconscious. You'd feel regret if you were a good person.");
         } else if (isAggression()) {
@@ -17,10 +17,9 @@ public class Trader extends NPC {
         } else {
             System.out.println("You've encountered a trader. You can buy useful items from them such as:\n Extinguisher: 10 dosh \n Booze: 1 dosh");
         }
-        return player;
     }
 
-    public Player friendlyInteract(String str, Player player) {
+    public void friendlyInteract(String str, Player player) {
         if (str.equalsIgnoreCase("Extinguisher")) {
             if (player.getDosh() >= 10) {
                 player.acquireOrUseExtinguisher(1);
@@ -41,7 +40,7 @@ public class Trader extends NPC {
         } else if (str.equalsIgnoreCase("punch")) {
             punch(str, player);
         }
-        return player;
+
     }
 
     private void punch(String str, Player player) {
@@ -59,21 +58,21 @@ public class Trader extends NPC {
     }
 
 
-    public Player angryInteract(String str, Player player) {
+    public void angryInteract(String str, Player player) {
         if (!isFainted()) {
             if (str.equalsIgnoreCase("punch")) {
                 punch(str, player);
             }
         }
-        return player;
+
     }
 
     @Override
-    public Player interact(String str, Player player) {
+    public void interact(String str, Player player) {
         if (!isAggression()) {
-            return friendlyInteract(str, player);
+            friendlyInteract(str, player);
         }
-        return angryInteract(str, player);
+        else angryInteract(str, player);
     }
 
     @Override

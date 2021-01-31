@@ -28,18 +28,18 @@ public class Tile {
         return (hasPlayer || (entity != null));
     }
 
-    public Player entityAction(Player player) {
+    public void entityAction(Player player) {
         if (entity != null) {
-            return entity.action(player);
+            entity.action(player);
         }
-        return player;
+
     }
 
-    public Player entityInteraction(String str, Player player) {
+    public void entityInteraction(String str, Player player) {
         if (entity != null) {
-            return entity.interact(str, player);
+            entity.interact(str, player);
         }
-        return player;
+
     }
 
     public void availableInteractions(Player player) {

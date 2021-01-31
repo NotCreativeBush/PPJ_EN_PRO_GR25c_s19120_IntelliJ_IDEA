@@ -96,14 +96,14 @@ public class Map {
         while (gameInProgress) {
             this.drawMap();
 
-            player = map[player.getX()][player.getY()].entityAction(player);
+            map[player.getX()][player.getY()].entityAction(player);
             System.out.println(player);
             this.checkWinOrLose();
             if (gameInProgress) {
                 map[player.getX()][player.getY()].availableInteractions(player);
                 String str = scanner.nextLine();
 
-                player = map[player.getX()][player.getY()].entityInteraction(str, player);
+                map[player.getX()][player.getY()].entityInteraction(str, player);
                 player.useBooze(str);
                 this.movePlayer(str);
                 this.checkWinOrLose();

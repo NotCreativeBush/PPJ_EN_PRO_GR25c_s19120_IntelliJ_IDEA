@@ -10,18 +10,18 @@ public class Fire extends Entity {
     }
 
     @Override
-    public Player action(Player player) {
+    public void action(Player player) {
         if (extinguished) {
             System.out.println("You've stepped into some ashes. You remember the times when there was fire here. You want to forget these times.");
         } else {
             System.out.println("You're in the fire. Fire is hot. Fire dealt damage. Fire will deal damage if you stay in it. Maybe you should step off the fire.");
             player.damageOrHeal(-1);
         }
-        return player;
+
     }
 
     @Override
-    public Player interact(String str, Player player) {
+    public void interact(String str, Player player) {
         if (str.equalsIgnoreCase("extinguish") && !extinguished) {
             if (player.getExtinguisher() > 0) {
                 player.acquireOrUseExtinguisher(-1);
@@ -34,7 +34,7 @@ public class Fire extends Entity {
                 player.damageOrHeal(-1);
             }
         }
-        return player;
+
     }
 
     @Override
