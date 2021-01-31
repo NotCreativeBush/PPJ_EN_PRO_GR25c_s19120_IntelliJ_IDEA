@@ -1,8 +1,7 @@
 package Tile;
 
-import Entities.Fire;
-import Entities.NPC;
-import Entities.Player;
+
+import Entities.*;
 
 import java.util.Scanner;
 
@@ -31,14 +30,18 @@ public class Map {
                 y = (int) (Math.random() * width);
             } while (map[x][y].isOccupied());
             map[x][y].setEntity(new NPC());
-        }
-        for (int i = 0; i < 4; i++) {
             do {
                 x = (int) (Math.random() * height);
                 y = (int) (Math.random() * width);
             } while (map[x][y].isOccupied());
             map[x][y].setEntity(new Fire());
+            do {
+                x = (int) (Math.random() * height);
+                y = (int) (Math.random() * width);
+            } while (map[x][y].isOccupied());
+            map[x][y].setEntity(new Trader());
         }
+
     }
 
     public void setHasPlayer(boolean b) {
@@ -87,8 +90,11 @@ public class Map {
     public void gameplay() {
         while (gameInProgress) {
             this.drawMap();
+
             player=map[player.getX()][player.getY()].entityAction(player);
+            System.out.println("Your Health is "+player.getHealth());
             this.checkWinOrLose();
+            map[player.getX()][player.getY()].availableInteractions();
             String str=scanner.nextLine();
             this.movePlayer(str);
             player=map[player.getX()][player.getY()].entityInteraction(str,player);

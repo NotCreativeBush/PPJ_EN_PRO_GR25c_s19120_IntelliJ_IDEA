@@ -20,6 +20,14 @@ public class NPC extends Entity {
         return health;
     }
 
+    public int getDosh() {
+        return dosh;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
     @Override
     public String toString(){
         return "N";

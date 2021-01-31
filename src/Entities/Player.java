@@ -3,6 +3,7 @@ package Entities;
 
 public class Player extends NPC {
     private int x = 0, y = 0;
+    private int extinguisher = 0, booze = 0;
 
     public Player() {
 
@@ -17,6 +18,23 @@ public class Player extends NPC {
     public Player(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public int getExtinguisher() {
+        return extinguisher;
+    }
+
+    public int getBooze() {
+        return booze;
+    }
+
+    public void acquireOrUseBooze(int amount){
+        booze+=amount;
+
+    }
+
+    public void acquireOrUseExtinguisher(int amount) {
+        extinguisher += amount;
     }
 
     public void movePlayer(String str) {
@@ -38,7 +56,8 @@ public class Player extends NPC {
     public int getX() {
         return x;
     }
-    public boolean checkBounds(int height, int width){
-        return (x<0||x>=height||y<0||y>=width);
+
+    public boolean checkBounds(int height, int width) {
+        return (x < 0 || x >= height || y < 0 || y >= width);
     }
 }

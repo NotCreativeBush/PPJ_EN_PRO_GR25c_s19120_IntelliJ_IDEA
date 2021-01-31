@@ -1,20 +1,12 @@
 package Entities;
 
-
-import java.util.ArrayList;
-
-public class Entity {
-
-    public Entity(){
-
-    }
+public class Enemy extends NPC {
+    @Override
     public Player action(Player player) {
         return player;
     }
+    @Override
     public Player interact(String str, Player player){
         return player;
-    }
-    public ArrayList<String> availableMoves(){
-        return new ArrayList<>();
     }
 }
